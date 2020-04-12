@@ -17,6 +17,10 @@ let rocketStats = null;
 let obj_width, obj_height;
 let collision_ids = []
 
+//keeps track of all players to have ever joined. Drops those no longer present. 
+let all_players_ever = []
+let curr_player_id_len = 0;
+
 function createPlayer(playerdata) {
   const res = new Rocket(playerdata);
   const rocket = res[0]
@@ -258,7 +262,43 @@ function proximityCollision() {
 }
 }*/
 
+function removeDead() {
+  //console.log( 'children', app.stage.children)
+  const all_players = packetsArray[0].data
 
+  if (curr_player_id_len != all_players.length) { 
+
+    curr_player_id_len = all_players.length
+
+    console.log( 'all of the current players.', all_players)
+    const curr_player_ids = []
+    //console.log('all players', all_players)
+    for (let i = 0; i < all_players.length; i++) {
+
+      // adds to a permanent list. 
+      if (!all_players_ever.includes(all_players[i].id)) {
+        all_players_ever.push(all_players[i].id)
+      }
+      curr_player_ids.push(all_players[i].id)
+    }
+    //let missing_players = []
+    console.log( 'all players ever', all_players_ever)
+    for (let i = 0; i < all_players_ever.length; i++) {
+      //check if any of these players arent in the current play
+      // would be more efficient to do a set operation
+      if (!curr_player_ids.includes(all_players_ever[i])) {
+        //missing player. remove rocket from the stage. 
+
+        console.log('removing an id!!!!')
+        const dead_rocket = getCurrentPlayerSprite(all_players_ever[i]);
+        app.stage.removeChild(dead_rocket);
+
+
+        //missing_players.push(all_players_ever[i])
+      }
+    }
+  }
+}
 
 document.getElementById("input_link_button").addEventListener("click", function(){
   
@@ -306,7 +346,7 @@ app.ticker.add(delta => {
     setPlayerName();
     //removeShareLinks();
     proximityCollision();
-    
+    removeDead();
   }
 
   /*if (proximityCollision()) {
