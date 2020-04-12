@@ -2,12 +2,12 @@ export class Rocket {
   constructor(params) {
     //this.container = new PIXI.Container();
 
-    const random_image_ind = Math.floor(Math.random() * Math.floor(3)) // 4 different things. 
-    console.log('rocket image is:', random_image_ind)
+    //const random_image_ind =  // 4 different things. 
+    //console.log('rocket image is:', random_image_ind)
 
     const image_files = ['alex.jpg', 'trent.jpg', 'grace.jpg']
 
-    this.sprite = PIXI.Sprite.fromImage("static/images/" + image_files[random_image_ind]);
+    this.sprite = PIXI.Sprite.fromImage("static/images/" + image_files[params.user_img_ind]);
     this.sprite.id = params.id;
     this.sprite.x = params.x;
     this.sprite.y = params.y;
@@ -26,7 +26,7 @@ export class Rocket {
       fill: "white",
     }); 
 
-    this.sprite.message = new PIXI.Text("Want to meet? Click me! \n Then share the link back here! ", style);
+    this.sprite.message = new PIXI.Text("Want to speak? Click here! \n Then share the link.", style);
     this.sprite.message.anchor.set(0.5);
     //this.sprite.message.position.set(params.x-8, params.y-8);
     this.sprite.message.visible = false
@@ -41,7 +41,7 @@ export class Rocket {
       window.open(url);
 
       //console.log('current text of the message', sprite)
-      //self.sprite.message.text= "Put the Share Link in the Box!"
+      self.sprite.message.text= "Put the Share Link in the Box!"
       //self.sprite.message.visible = false;
 
       var popup = document.getElementById("input_link");
@@ -68,7 +68,9 @@ export class Rocket {
       console.log(e);
 
       const url = self.sprite.share_link.text;
-      window.open(url);
+      //parse the text. 
+      
+      window.open(url.split('\n')[1]);
     });
 
 

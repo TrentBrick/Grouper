@@ -48,7 +48,8 @@ function createPlayer() {
     x: Math.floor(Math.random() * Math.floor(1200))+50,
     y: Math.floor(Math.random() * Math.floor(800))+50,
     user_name: "",
-    share_link: "None"
+    share_link: "None",
+    user_img_ind: Math.floor(Math.random() * Math.floor(3))
   };
   playersData.players[player.id] = player;
   return player;

@@ -116,7 +116,7 @@ function setPlayerName() {
       const full_player = getCurrentPlayerSprite(player.id);
       full_player.user_name.text = rocketStats.user_name;
       //console.log('full current player', player.x, player.y, full_player.user_name.text);
-      full_player.user_name.position.set(player.x+10, player.y+155);
+      full_player.user_name.position.set(player.x+35, player.y+155);
 
       // remove the share link if no collisions: 
       if (collision_ids.length == 0) {
@@ -140,13 +140,13 @@ function setPlayerName() {
 
       //updating the player user name and its location. 
       full_player.user_name.text = player.user_name;
-      full_player.user_name.position.set(player.x, player.y+30);
+      full_player.user_name.position.set(player.x+35, player.y+155);
 
       // setting the share link!!
       if (player.share_link != "None" && collision_ids.includes(player.id)) {
         //console.log('trying to set the share link!!', player.share_link, full_player)
-        full_player.share_link.text = "Click to join! \n " + player.share_link;
-        full_player.share_link.position.set(player.x, player.y+50);
+        full_player.share_link.text = "Click to join group! \n " + player.share_link;
+        full_player.share_link.position.set(player.x+20, player.y-45);
         full_player.share_link.visible = true;
         }
 
@@ -225,8 +225,9 @@ function proximityCollision() {
 
   if (collision_ids.length > 0) {
     // display message above the current rocket. 
-    r1.message.position.set(r1.x-10, r1.y-20);
+    r1.message.position.set(r1.x+82, r1.y-20);
     r1.message.visible = true
+    //r1.message.text = "Want to speak? Click here! \n Then share the link."
   }
   else {
     r1.message.visible = false
