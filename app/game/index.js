@@ -2,6 +2,8 @@ import KeyListener from "./helpers/keylistener.js";
 import Socket from "./helpers/sockets.js";
 import { Rocket } from "./models/rocket.js";
 import { lerp } from "./helpers/math.js";
+//import * as PIXI from 'pixi.js';
+//import TextInput from "pixi-textinput-v5";
 //import 'pixi-text-input' as TextInput
 //import {TextInput} from 'pixi-text-input';
 //const TextInput = require('pixi-text-input')
@@ -24,6 +26,7 @@ function createPlayer(playerdata) {
   obj_width = res[3]
   app.stage.addChild(rocket);
   app.stage.addChild(message);
+  app.stage.addChild(rocket.user_name);
 }
 
 //interpolates tehe movements of all the other players. 
@@ -99,32 +102,43 @@ function setPlayerName() {
 
   //loop through all players. 
   const all_players = packetsArray[0].data
-
-  console.log('all players', all_players)
-
+  //console.log('all players', all_players)
   for (let i = 0; i < all_players.length; i++) {
     const player = all_players[i]
 
-    console.log('current player', player)
+    //console.log('current player', player)
 
     if (player.id === rocketStats.id) {
       const user_name_params = new URLSearchParams(window.location.href);
       const user_name_text = user_name_params.toString().split("name=")[1]
-      const user_player = getCurrentPlayerSprite(rocketStats.id);
-      user_player.user_name.text = user_name_text;
+      const full_player = getCurrentPlayerSprite(player.id);
+      full_player.user_name.text = user_name_text;
+      //console.log('full current player', player.x, player.y, full_player.user_name.text);
+      rocketStats.user_name = user_name_text;
+      full_player.user_name.position.set(player.x, player.y+30);
     }
-
     else {
-      const newPlayerSprite = getCurrentPlayerSprite(player.id);
-      newPlayerSprite.user_name.text = player.user_name
+      const full_player = getCurrentPlayerSprite(player.id);
+
+      if (!full_player) { //need to create a new character locally!!
+        //console.log('making a new player here!! Did not exist before. ')
+        // generates a new sprite at the position of each player at each time point. 
+        // faster than having to send the image file? 
+        // ultimately I will need to send the image file though. 
+        createPlayer(player);
+        const full_player = getCurrentPlayerSprite(player.id);
+        full_player.x = player.x;
+        full_player.y = player.y;
+        full_player.user_name.text = player.user_name;
+        full_player.user_name.position.set(player.x, player.y+30);
+      }
+
+      else {//console.log('full other player', player.x, player.y, full_player.user_name.text);
+      full_player.user_name.text = player.user_name;
+      full_player.user_name.position.set(player.x, player.y+30);
     }
-
-    player.user_name.position.set(player.x, player.y+30);
-
-    rocketStats.user_name = user_name_text
-    
+    }
   }
-  
 }
 
 function proximityCollision() {
@@ -176,6 +190,7 @@ function proximityCollision() {
     //Check for a collision on either axis
     if ((Math.abs(vx) < combinedHalfWidths) && (Math.abs(vy) < combinedHalfHeights)) {
       collision_ids.push(r2.id)
+      
     }
 
   //console.log('collision idslist', collision_ids);
@@ -218,6 +233,7 @@ app.ticker.add(delta => {
     interPolate();
     setPlayerName();
     proximityCollision();
+    
   }
 
   /*if (proximityCollision()) {

@@ -7,6 +7,8 @@ export class Rocket {
     this.sprite.y = params.y;
     this.sprite.height = 50;
     this.sprite.width = 50;
+    this.sprite.inContact = false;
+    var self = this;
     //this.container.addChild(this.sprite)
 
     // overhead message
@@ -24,13 +26,42 @@ export class Rocket {
     //this.sprite.message.anchor.set(0.5);
     this.sprite.message.interactive = true;
     this.sprite.message.buttonMode = true;
-    this.sprite.message.on('pointerdown', function () {
+    this.sprite.message.addListener('pointerdown', function (e) {
+      
+      console.log(e);
+
       const url = "http://hangouts.google.com/start";
       window.open(url);
-  });
+
+      //console.log('current text of the message', sprite)
+      //self.sprite.message.text= "LINK HAS BEEN CLICKED!!!"
+
+      self.sprite.message.visible = False
+
+      self.sprite.inputbox = new PIXI.TextInput({
+        input: {
+          fontSize: '36px',
+          padding: '12px',
+          width: '500px',
+          color: '#26272E'
+        },
+        box: {
+          default: {fill: 0xE8E9F3, rounded: 12, stroke: {color: 0xCBCEE0, width: 3}},
+          focused: {fill: 0xE1E3EE, rounded: 12, stroke: {color: 0xABAFC6, width: 3}},
+          disabled: {fill: 0xDBDBDB, rounded: 12}
+        }
+      });
+      this.sprite.inputbox.placeholder = "Hangouts Invite Link"
+
+
+    })
+
+    //this.sprite.message.on('pointerup', function() {
+      
+    //});
 
     this.sprite.user_name = new PIXI.Text("", style);
-    this.sprite.user_name.visible = false;
+    this.sprite.user_name.visible = true;
 
     //this.container.addChild(message);
 

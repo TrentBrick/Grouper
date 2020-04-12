@@ -49,7 +49,6 @@ function createPlayer() {
     y: Math.floor(Math.random() * Math.floor(600)),
     user_name: "Placeholder"
   };
-  console.log('player in node js code');
   playersData.players[player.id] = player;
   return player;
 }
