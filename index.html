@@ -18,10 +18,22 @@
       <form id='user_name' action=''>
         <label for="name">Your Name:</label>
   
-        <input type="text" id="name" name="name" required
+        <input type="text" id="input_name_box" name="name" required
               minlength="1" maxlength="20" size="15">
   
-        <input type="submit" value='Submit'>
+        <input type="button" id="input_name_button" value='Submit'>
+      </form>
+    </div>
+
+
+    <div id='input_link'>
+      <form id='share_link' action=''>
+        <label for="link">Input Share Link:</label>
+  
+        <input type="text" id="share_link_input" name="share_link" required
+              minlength="1" maxlength="100" size="15" >
+  
+        <input id="input_link_button" type="button" value='Submit'>
       </form>
     </div>
 

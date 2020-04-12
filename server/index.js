@@ -47,7 +47,8 @@ function createPlayer() {
     // Randomly generates in the area. 
     x: Math.floor(Math.random() * Math.floor(800)),
     y: Math.floor(Math.random() * Math.floor(600)),
-    user_name: "Placeholder"
+    user_name: "",
+    share_link: "None"
   };
   playersData.players[player.id] = player;
   return player;

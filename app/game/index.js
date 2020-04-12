@@ -15,8 +15,10 @@ let packetsArray = [];
 
 let rocketStats = null;
 let obj_width, obj_height;
-let user_name_empty = true;
-let user_name; 
+let last_share_time;
+// interval before share links are dropped again. 
+let share_interval = 5;
+let collision_ids = []
 
 function createPlayer(playerdata) {
   const res = new Rocket(playerdata);
@@ -27,6 +29,7 @@ function createPlayer(playerdata) {
   app.stage.addChild(rocket);
   app.stage.addChild(message);
   app.stage.addChild(rocket.user_name);
+  app.stage.addChild(rocket.share_link);
 }
 
 //interpolates tehe movements of all the other players. 
@@ -109,16 +112,21 @@ function setPlayerName() {
     //console.log('current player', player)
 
     if (player.id === rocketStats.id) {
-      const user_name_params = new URLSearchParams(window.location.href);
-      const user_name_text = user_name_params.toString().split("name=")[1]
       const full_player = getCurrentPlayerSprite(player.id);
-      full_player.user_name.text = user_name_text;
+      full_player.user_name.text = rocketStats.user_name;
       //console.log('full current player', player.x, player.y, full_player.user_name.text);
-      rocketStats.user_name = user_name_text;
       full_player.user_name.position.set(player.x, player.y+30);
+
+      // remove the share link if no collisions: 
+      if (collision_ids.length == 0) {
+        rocketStats.share_link = 'None'
+      }
+
     }
     else {
-      const full_player = getCurrentPlayerSprite(player.id);
+      let full_player = getCurrentPlayerSprite(player.id);
+
+      console.log('not current player', player.share_link, full_player)
 
       if (!full_player) { //need to create a new character locally!!
         //console.log('making a new player here!! Did not exist before. ')
@@ -126,17 +134,28 @@ function setPlayerName() {
         // faster than having to send the image file? 
         // ultimately I will need to send the image file though. 
         createPlayer(player);
-        const full_player = getCurrentPlayerSprite(player.id);
-        full_player.x = player.x;
-        full_player.y = player.y;
-        full_player.user_name.text = player.user_name;
-        full_player.user_name.position.set(player.x, player.y+30);
+        full_player = getCurrentPlayerSprite(player.id);
       }
 
-      else {//console.log('full other player', player.x, player.y, full_player.user_name.text);
+      //updating the player user name and its location. 
       full_player.user_name.text = player.user_name;
       full_player.user_name.position.set(player.x, player.y+30);
-    }
+
+      // setting the share link!!
+      if (player.share_link != "None" && collision_ids.includes(player.id)) {
+        //console.log('trying to set the share link!!', player.share_link, full_player)
+        full_player.share_link.text = player.share_link;
+        full_player.share_link.position.set(player.x, player.y+50);
+        full_player.share_link.visible = true;
+        }
+
+      else {
+          console.log('share link should be removed', player.share_link, full_player.share_link.text , collision_ids)
+          player.share_link = "None"
+          full_player.share_link.text = "None";
+          full_player.share_link.visible = false;
+      }
+
     }
   }
 }
@@ -164,7 +183,7 @@ function proximityCollision() {
 
   //loop through all other players. 
   const all_players = packetsArray[0].data
-  let collision_ids = []
+  
 
   for (let i = 0; i < all_players.length; i++) {
     const r2 = all_players[i]
@@ -189,8 +208,16 @@ function proximityCollision() {
 
     //Check for a collision on either axis
     if ((Math.abs(vx) < combinedHalfWidths) && (Math.abs(vy) < combinedHalfHeights)) {
+      if (!collision_ids.includes(r2.id) ) {
       collision_ids.push(r2.id)
-      
+      }
+    }
+    else { //remove it
+      if (collision_ids.includes(r2.id) ) {
+        const ind = collision_ids.indexOf(r2.id);
+        collision_ids.splice(ind)
+      }
+
     }
 
   //console.log('collision idslist', collision_ids);
@@ -204,7 +231,6 @@ function proximityCollision() {
     r1.message.visible = false
   }
 
-
   }
   // need to display hit here. all the other ones can run locally too.
   // generates link
@@ -212,6 +238,55 @@ function proximityCollision() {
 
   //return collision_ids
 }
+
+/*function removeShareLinks() {
+  // every 10 seconds drop all currently shared links. 
+  let t1 = packetsArray[0].timestamp;
+  //convert to seconds
+  t1 = Math.round(t1/1000)
+  console.log('times are: ', t1, last_share_time)
+  console.log('collision ids', collision_ids)
+  if (last_share_time+share_interval < t1 ){
+
+    const all_players = packetsArray[0].data
+    //console.log('all players', all_players)
+  for (let i = 0; i < all_players.length; i++) {
+    const full_player = getCurrentPlayerSprite(all_players[i].id);
+    full_player.share_link.text = ""
+    full_player.share_link.visible = false;
+
+    //drop the links. 
+    last_share_time = t1
+  }
+}
+}*/
+
+
+
+document.getElementById("input_link_button").addEventListener("click", function(){
+  
+  var text_link_input = document.getElementById("share_link_input").value;
+  console.log('got the text input!!', text_link_input)
+  var popup = document.getElementById("input_link");
+  //console.log('got the document!!!', popup)
+  popup.style.zIndex = -1;
+  rocketStats.share_link = text_link_input;
+
+  //reset the share link text
+
+  sendData();
+});
+
+document.getElementById("input_name_button").addEventListener("click", function(){
+  
+  var text_user_input = document.getElementById("input_name_box").value;
+  console.log('got the text input!!', text_user_input)
+  var popup = document.getElementById("input_name");
+  //console.log('got the document!!!', popup)
+  popup.style.zIndex = -1;
+  rocketStats.user_name = text_user_input;
+  sendData();
+});
 
 // This is what is run upon recieving a message. 
 socket.connection.onmessage = signal => {
@@ -232,6 +307,7 @@ app.ticker.add(delta => {
   if (rocketStats) {
     interPolate();
     setPlayerName();
+    //removeShareLinks();
     proximityCollision();
     
   }

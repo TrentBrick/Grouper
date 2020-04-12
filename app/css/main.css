@@ -17,5 +17,20 @@
     left: 300px;
     padding: 10px;
     background-color:white;
+    z-index:1;
     
+}
+
+#input_link {
+
+    width: 300px;
+    height: auto;
+    position: absolute;
+    top: 100px; 
+    left: 200px;
+    padding: 10px;
+    background-color:white;
+    z-index:-1;
+
+
 }

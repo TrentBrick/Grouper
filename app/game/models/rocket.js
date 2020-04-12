@@ -21,7 +21,7 @@ export class Rocket {
     }); 
 
     this.sprite.message = new PIXI.Text("Want to meet? Click me! \n Then share the link back here! ", style);
-    this.sprite.message.position.set(params.x.x-8, params.y-8);
+    this.sprite.message.position.set(params.x-8, params.y-8);
     this.sprite.message.visible = false
     //this.sprite.message.anchor.set(0.5);
     this.sprite.message.interactive = true;
@@ -34,26 +34,12 @@ export class Rocket {
       window.open(url);
 
       //console.log('current text of the message', sprite)
-      //self.sprite.message.text= "LINK HAS BEEN CLICKED!!!"
+      //self.sprite.message.text= "Put the Share Link in the Box!"
+      //self.sprite.message.visible = false;
 
-      self.sprite.message.visible = False
-
-      self.sprite.inputbox = new PIXI.TextInput({
-        input: {
-          fontSize: '36px',
-          padding: '12px',
-          width: '500px',
-          color: '#26272E'
-        },
-        box: {
-          default: {fill: 0xE8E9F3, rounded: 12, stroke: {color: 0xCBCEE0, width: 3}},
-          focused: {fill: 0xE1E3EE, rounded: 12, stroke: {color: 0xABAFC6, width: 3}},
-          disabled: {fill: 0xDBDBDB, rounded: 12}
-        }
-      });
-      this.sprite.inputbox.placeholder = "Hangouts Invite Link"
-
-
+      var popup = document.getElementById("input_link");
+      console.log('got the document!!!', popup)
+      popup.style.zIndex = 1;
     })
 
     //this.sprite.message.on('pointerup', function() {
@@ -62,6 +48,22 @@ export class Rocket {
 
     this.sprite.user_name = new PIXI.Text("", style);
     this.sprite.user_name.visible = true;
+
+    // link display abilities: 
+    this.sprite.share_link = new PIXI.Text("None", style);
+    this.sprite.share_link.visible = false;
+
+
+    this.sprite.share_link.interactive = true;
+    this.sprite.share_link.buttonMode = true;
+    this.sprite.share_link.addListener('pointerdown', function (e) {
+      
+      console.log(e);
+
+      const url = self.sprite.share_link.text;
+      window.open(url);
+    });
+
 
     //this.container.addChild(message);
 
