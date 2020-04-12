@@ -14,9 +14,15 @@ We see this application being very useful for online events such as parties, con
 * Alexander Bricken
 * Trenton Bricken
 
+## Landing Page: 
+
+<https://bricken.co/Grouper-web/> 
+
 ## Final Demo Video
 
-(Initial Pitch Video: <https://youtu.be/2QFyOFZmL2c>)
+<https://www.youtube.com/watch?v=aSm9E1kTjkk&feature=youtu.be>
+
+(Initial Pitch Video: <https://youtu.be/2QFyOFZmL2c>
 
 ## Run Locally
 
@@ -32,4 +38,6 @@ Open browser at `http://127.0.0.1:3000` and open multiple tabs to create differe
 Use the arrow keys to move the character around and have fun!
 
 ## Acknowledgements
-We are grateful to all of the open source developers behind the following projects that made the MVP of Grouper possible: PixiJS (<https://www.pixijs.com/>); Pixi Tutorial (<https://github.com/kittykatattack/learningPixi>); Pixi Multiplayer example code (<https://github.com/tonis2/pixi-multiplayer-example)>; HTML; CSS; JavaScript. 
+We are grateful to all of the open source developers behind the following projects that made the MVP of Grouper possible: PixiJS (<https://www.pixijs.com/>); Pixi Tutorial (<https://github.com/kittykatattack/learningPixi>); Pixi Multiplayer example code (<https://github.com/tonis2/pixi-multiplayer-example)>; HTML; CSS; JavaScript.
+
+Thank you to Pioneer for running the hackathon that this project was a part of! <https://pioneer.app/hackathon>. Grouper project submission: <https://frontier.pioneer.app/posts/140-grouper>
