@@ -1,12 +1,18 @@
 export class Rocket {
   constructor(params) {
     //this.container = new PIXI.Container();
-    this.sprite = PIXI.Sprite.fromImage("static/images/rocket.png");
+
+    const random_image_ind = Math.floor(Math.random() * Math.floor(3)) // 4 different things. 
+    console.log('rocket image is:', random_image_ind)
+
+    const image_files = ['alex.jpg', 'trent.jpg', 'grace.jpg']
+
+    this.sprite = PIXI.Sprite.fromImage("static/images/" + image_files[random_image_ind]);
     this.sprite.id = params.id;
     this.sprite.x = params.x;
     this.sprite.y = params.y;
-    this.sprite.height = 50;
-    this.sprite.width = 50;
+    this.sprite.height = 150;
+    this.sprite.width = 120;
     this.sprite.inContact = false;
     var self = this;
     //this.container.addChild(this.sprite)

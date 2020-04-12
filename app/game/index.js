@@ -9,7 +9,7 @@ import { lerp } from "./helpers/math.js";
 //const TextInput = require('pixi-text-input')
 //import {TextInput} from './helpers/PIXITextInp.js';
 const socket = new Socket();
-const app = new PIXI.Application(800, 600, { backgroundColor: 0x1099bb });
+const app = new PIXI.Application(1400, 1000, { backgroundColor: 0x1099bb });
 const Listener = new KeyListener();
 let packetsArray = [];
 
@@ -127,7 +127,7 @@ function setPlayerName() {
     else {
       let full_player = getCurrentPlayerSprite(player.id);
 
-      console.log('not current player', player.share_link, full_player)
+      //console.log('not current player', player.share_link, full_player)
 
       if (!full_player) { //need to create a new character locally!!
         //console.log('making a new player here!! Did not exist before. ')
@@ -151,7 +151,7 @@ function setPlayerName() {
         }
 
       else {
-          console.log('share link should be removed', player.share_link, full_player.share_link.text , collision_ids)
+          //console.log('share link should be removed', player.share_link, full_player.share_link.text , collision_ids)
           player.share_link = "None"
           full_player.share_link.text = "None";
           full_player.share_link.visible = false;
@@ -169,7 +169,7 @@ function proximityCollision() {
   let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
   //hit will determine whether there's a collision
   hit = false;
-  const aura=15;
+  const aura=25;
 
   // get current player. 
   const r1 = getCurrentPlayerSprite(rocketStats.id);
@@ -270,7 +270,7 @@ function removeDead() {
 
     curr_player_id_len = all_players.length
 
-    console.log( 'all of the current players.', all_players)
+    //console.log( 'all of the current players.', all_players)
     const curr_player_ids = []
     //console.log('all players', all_players)
     for (let i = 0; i < all_players.length; i++) {
@@ -282,14 +282,14 @@ function removeDead() {
       curr_player_ids.push(all_players[i].id)
     }
     //let missing_players = []
-    console.log( 'all players ever', all_players_ever)
+    //console.log( 'all players ever', all_players_ever)
     for (let i = 0; i < all_players_ever.length; i++) {
       //check if any of these players arent in the current play
       // would be more efficient to do a set operation
       if (!curr_player_ids.includes(all_players_ever[i])) {
         //missing player. remove rocket from the stage. 
 
-        console.log('removing an id!!!!')
+        //console.log('removing an id!!!!')
         const dead_rocket = getCurrentPlayerSprite(all_players_ever[i]);
         app.stage.removeChild(dead_rocket);
 
@@ -303,7 +303,7 @@ function removeDead() {
 document.getElementById("input_link_button").addEventListener("click", function(){
   
   var text_link_input = document.getElementById("share_link_input").value;
-  console.log('got the text input!!', text_link_input)
+  //console.log('got the text input!!', text_link_input)
   var popup = document.getElementById("input_link");
   //console.log('got the document!!!', popup)
   popup.style.zIndex = -1;
@@ -317,7 +317,7 @@ document.getElementById("input_link_button").addEventListener("click", function(
 document.getElementById("input_name_button").addEventListener("click", function(){
   
   var text_user_input = document.getElementById("input_name_box").value;
-  console.log('got the text input!!', text_user_input)
+  //console.log('got the text input!!', text_user_input)
   var popup = document.getElementById("input_name");
   //console.log('got the document!!!', popup)
   popup.style.zIndex = -1;

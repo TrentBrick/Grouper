@@ -45,8 +45,8 @@ function createPlayer() {
   const player = {
     id: Math.random().toString(36).substring(7),
     // Randomly generates in the area. 
-    x: Math.floor(Math.random() * Math.floor(800)),
-    y: Math.floor(Math.random() * Math.floor(600)),
+    x: Math.floor(Math.random() * Math.floor(1200))+50,
+    y: Math.floor(Math.random() * Math.floor(800))+50,
     user_name: "",
     share_link: "None"
   };
