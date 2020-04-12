@@ -15,9 +15,6 @@ let packetsArray = [];
 
 let rocketStats = null;
 let obj_width, obj_height;
-let last_share_time;
-// interval before share links are dropped again. 
-let share_interval = 5;
 let collision_ids = []
 
 function createPlayer(playerdata) {
@@ -144,7 +141,7 @@ function setPlayerName() {
       // setting the share link!!
       if (player.share_link != "None" && collision_ids.includes(player.id)) {
         //console.log('trying to set the share link!!', player.share_link, full_player)
-        full_player.share_link.text = player.share_link;
+        full_player.share_link.text = "Click to join! \n " + player.share_link;
         full_player.share_link.position.set(player.x, player.y+50);
         full_player.share_link.visible = true;
         }
