@@ -27,7 +27,8 @@ export class Rocket {
     }); 
 
     this.sprite.message = new PIXI.Text("Want to meet? Click me! \n Then share the link back here! ", style);
-    this.sprite.message.position.set(params.x-8, params.y-8);
+    this.sprite.message.anchor.set(0.5);
+    //this.sprite.message.position.set(params.x-8, params.y-8);
     this.sprite.message.visible = false
     //this.sprite.message.anchor.set(0.5);
     this.sprite.message.interactive = true;

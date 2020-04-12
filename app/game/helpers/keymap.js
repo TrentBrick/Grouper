@@ -5,5 +5,9 @@ export default {
   68: "D",
   38: "UP",
   40: "DOWN",
-  16: "SHIFT"
+  16: "SHIFT",
+  37: "LeftArrow",
+  38: "UpArrow",
+  39: "RightArrow",
+  40: "DownArrow"
 };

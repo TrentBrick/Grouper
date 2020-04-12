@@ -1,6 +1,6 @@
 import KeyListener from "./helpers/keylistener.js";
 import Socket from "./helpers/sockets.js";
-import { Rocket } from "./models/rocket.js";
+import { Rocket } from "./models/sprite.js";
 import { lerp } from "./helpers/math.js";
 //import * as PIXI from 'pixi.js';
 //import TextInput from "pixi-textinput-v5";
@@ -116,7 +116,7 @@ function setPlayerName() {
       const full_player = getCurrentPlayerSprite(player.id);
       full_player.user_name.text = rocketStats.user_name;
       //console.log('full current player', player.x, player.y, full_player.user_name.text);
-      full_player.user_name.position.set(player.x, player.y+30);
+      full_player.user_name.position.set(player.x+10, player.y+155);
 
       // remove the share link if no collisions: 
       if (collision_ids.length == 0) {
@@ -364,22 +364,22 @@ app.ticker.add(delta => {
     box.tint = 0xccff99;
   }
 */
-  Listener.on("W", () => {
+  Listener.on("UpArrow", () => {
     rocketStats.y -= 4;
     sendData();
   });
 
-  Listener.on("S", () => {
+  Listener.on("DownArrow", () => {
     rocketStats.y += 4;
     sendData();
   });
 
-  Listener.on("A", () => {
+  Listener.on("LeftArrow", () => {
     rocketStats.x -= 4;
     sendData();
   });
 
-  Listener.on("D", () => {
+  Listener.on("RightArrow", () => {
     rocketStats.x += 4;
     sendData();
   });
