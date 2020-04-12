@@ -22,7 +22,7 @@ We see this application being very useful for online events such as parties, con
 
 <https://www.youtube.com/watch?v=aSm9E1kTjkk&feature=youtu.be>
 
-(Initial Pitch Video: <https://youtu.be/2QFyOFZmL2c>
+(Initial Pitch Video: <https://youtu.be/2QFyOFZmL2c> )
 
 ## Run Locally
 
